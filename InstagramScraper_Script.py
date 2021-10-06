@@ -1,19 +1,18 @@
-from instagramy import Instagram
+from instagramy import InstagramUser
+import pandas as pd
 
-# Connecting the profile
-user = Instagram("albert239825")
 
-# printing the basic details like
-# followers, following, bio
-print(user.is_verified())
-print(user.popularity())
-print(user.get_biography())
+# This code uses the package instagramy - Decided to switch from this package as there was a 12 post limitation. Decided to Swtich to the insta-scrape package instead
+# session_id = "7320119797%3Ai4FA7JQKcRyMNJ%3A15"
+# # Connecting the profile
+# user = InstagramUser('albert239825', sessionid=session_id)
 
-# return list of dicts
-posts = user.get_posts_details()
 
-print('\n\nLikes', 'Comments')
-for post in posts:
-    likes = post["likes"]
-    comments = post["comment"]
-    print(likes, comments)
+# # printing the basic details like
+# # followers, following, bio
+# print(user.is_verified)
+# print(user.number_of_followers)
+# print(user.number_of_posts)
+# posts = user.posts
+# for post in posts:
+#     print(post.likes)
