@@ -1,4 +1,5 @@
 from instagramy import InstagramUser
+import instascrape
 import pandas as pd
 
 
