@@ -1,4 +1,3 @@
-from instagramy import InstagramUser
 from instascrape import Profile, scrape_posts, Post
 from selenium.webdriver import Chrome
 from datetime import datetime
@@ -66,15 +65,15 @@ def create_post_df(scraped_posts):
     return df
 
 
-def write_to_excel(user_df, users):
-    if (len(user_df) != users.shape[0]):
+def write_to_excel(user_post_dfs, users_df):
+    if (len(user_post_dfs) != users_df.shape[0]):
         raise ValueError("length of the posts dataframes and user dataframes are mismatched, there are {} posts dataframes and {} rows in the user dataframe".format(
-            len(user_df, users.shape[0])))
+            len(user_post_dfs, users_df.shape[0])))
 
-    # if this doesn't work, we can use openpyxl's workbook object instead of pandas.dataframe.to_excel
     with pd.ExcelWriter('User Data.xlsx', engine='openpyxl') as writer:
-        for i in range(0, len(user_df)):
+        for i in range(0, len(user_post_dfs)):
             # this regex statement replaces excel's invalid characters with and underscore
-            title = re.sub(INVALID_TITLE_REGEX, '_', users.at[i, 'School'])
-            users[i].to_excel(writer, sheet_name=title, index=False)
-            #user_post_dfs[i].to_excel(writer,  mode='a', sheetname=users_df.at[i, 'School'], index=False)
+            title = re.sub(INVALID_TITLE_REGEX, '_', users_df.at[i, 'School'])
+            users_df.iloc[[i]].to_excel(writer, sheet_name=title, index=False)
+            user_post_dfs[i].to_excel(
+                writer, startrow=3, sheet_name=title, index=False)
