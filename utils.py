@@ -68,7 +68,7 @@ def create_post_df(scraped_posts):
 def write_to_excel(user_post_dfs, users_df):
     if (len(user_post_dfs) != users_df.shape[0]):
         raise ValueError("length of the posts dataframes and user dataframes are mismatched, there are {} posts dataframes and {} rows in the user dataframe".format(
-            len(user_post_dfs, users_df.shape[0])))
+            len(user_post_dfs), len(users_df.shape[0])))
 
     with pd.ExcelWriter('User Data.xlsx', engine='openpyxl') as writer:
         for i in range(0, len(user_post_dfs)):
