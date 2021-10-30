@@ -73,7 +73,6 @@ def write_to_excel(user_post_dfs, users_df):
     with pd.ExcelWriter('User Data.xlsx', engine='openpyxl') as writer:
         for i in users_df.index:
             # this regex statement replaces excel's invalid characters with and underscore
-            print(users_df.at[i, 'School'])
             title = re.sub(INVALID_TITLE_REGEX, '_', users_df.at[i, 'School'])
             users_df.iloc[[i]].to_excel(writer, sheet_name=title, index=False)
             user_post_dfs[i].to_excel(
