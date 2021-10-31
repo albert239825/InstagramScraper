@@ -43,7 +43,7 @@ def check_valid_username(users):
                     users.iloc[i]["IG Username"], i, users.iloc[i]['School']))
 
 
-def create_post_df(scraped_posts):
+def create_post_df(scraped_posts, cut_off_date=datetime(2021, 8, 1)):
     # Create Data Frame with collumns for post attributes
     df = pd.DataFrame(
         columns=['post_url', 'date_posted', 'number_of_likes', 'number_of_comments'])
@@ -56,10 +56,11 @@ def create_post_df(scraped_posts):
 
     for i in range(0, len(scraped_posts)):
         cur_post = scraped_posts[i]
-        df.at[i, 'post_url'] = "instagram.com/p/{}".format(cur_post.shortcode)
-        df.at[i, 'date_posted'] = datetime.fromtimestamp(cur_post.timestamp)
-        df.at[i, 'number_of_likes'] = cur_post.likes
-        df.at[i, 'number_of_comments'] = cur_post.comments
+        if (datetime.fromtimestamp(cur_post.timestamp) < cut_off_date):
+            df.at[i, 'post_url'] = "instagram.com/p/{}".format(cur_post.shortcode)
+            df.at[i, 'date_posted'] = datetime.fromtimestamp(cur_post.timestamp)
+            df.at[i, 'number_of_likes'] = cur_post.likes
+            df.at[i, 'number_of_comments'] = cur_post.comments
 
     # return filled dataframe
     return df
